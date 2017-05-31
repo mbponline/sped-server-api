@@ -1,0 +1,59 @@
+Login:
+        path:    /login/{username}/{password}
+        defaults: { _controller: ApiBundle:User:login }
+
+Registration:
+        path:    /registration/{username}/{phone}/{plainpassword}/{firstname}/{lastname}/{passport}/{country}/{city}/{address}/{company}/{language}
+        defaults: { _controller: ApiBundle:User:registration }
+
+EditUser:
+        path:    /edit_user/{username}/{phone}/{firstname}/{lastname}/{passport}/{country}/{city}/{address}/{company}/{language}
+        defaults: { _controller: ApiBundle:User:EditUser }
+
+ListOfUsers:
+        path:    /list_of_users
+        defaults: { _controller: ApiBundle:User:listOfUsers }
+
+Send:
+        path:    /send
+        defaults: { _controller: ApiBundle:User:send }
+
+Messages:
+        path:    /messages/{token}
+        defaults: { _controller: ApiBundle:User:messages }
+
+RecivedFiles:
+        path:    /files/{message_id}/{token}
+        defaults: { _controller: ApiBundle:User:files }
+
+SentMessages:
+        path:    /sent_messages/{token}
+        defaults: { _controller: ApiBundle:User:sentMessages }
+
+User:
+        path:    /user/{token}
+        defaults: { _controller: ApiBundle:User:getUser }
+
+DeleteUser:
+        path:    /delete_user/{user_id}/{token}
+        defaults: { _controller: ApiBundle:User:deleteUser }
+
+DeleteMessage:
+        path:    /delete_message/{message_id}/{token}
+        defaults: { _controller: ApiBundle:User:deleteMessage }
+
+StatusMessage:
+        path:    /message_status/{message_id}/{token}/{from_to}
+        defaults: { _controller: ApiBundle:User:setStatus }
+
+Forum:
+        path:    /forum/{token}
+        defaults: { _controller: ApiBundle:User:getForum }
+
+PostForum:
+        path:    /post_forum/{token}
+        defaults: { _controller: ApiBundle:User:postForum }
+
+Firebase:
+        path:    /firebase/{token}
+        defaults: { _controller: ApiBundle:User:firebase }

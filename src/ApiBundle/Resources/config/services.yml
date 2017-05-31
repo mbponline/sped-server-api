@@ -1,0 +1,5 @@
+services:
+
+    UserService:
+        class:        ApiBundle\Service\UserService
+        arguments:    ['@doctrine.orm.entity_manager','@security.password_encoder','%files_upload_folder%']
