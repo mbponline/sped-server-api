@@ -43,7 +43,7 @@ DeleteMessage:
         defaults: { _controller: ApiBundle:User:deleteMessage }
 
 StatusMessage:
-        path:    /message_status/{message_id}/{token}/{from_to}
+        path:    /message_status/{message_id}/{token}
         defaults: { _controller: ApiBundle:User:setStatus }
 
 Forum:

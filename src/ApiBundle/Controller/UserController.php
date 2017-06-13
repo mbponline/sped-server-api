@@ -220,11 +220,11 @@ class UserController extends Controller
         return $response;
     }
 
-    public function setStatusAction($message_id, $token, $from_to){
+    public function setStatusAction($message_id, $token){
         $user = $this->get('UserService')->getUserByToken($token);
       
         if($user){
-            $status = $this->get('UserService')->setStatus($message_id, $from_to, $token);
+            $status = $this->get('UserService')->setStatus($message_id, $token);
         }
         
         $serializer = $this->get('serializer');

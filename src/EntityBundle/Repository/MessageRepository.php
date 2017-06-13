@@ -13,10 +13,13 @@ class MessageRepository extends \Doctrine\ORM\EntityRepository
 	public function userMessages($user_id){
 		$em = $this->getEntityManager();
 		$connection = $em->getConnection();
-		$statement = $connection->prepare("SELECT user.username, message.id, message.sent_to_id, message.sent_from_id, message.text_message, message.id, user_profile.lastname, 
-			user_profile.firstname, user_profile.company, user_profile.country, message.created_at, message.status
+		$statement = $connection->prepare("SELECT user.username, message.id, message.sent_to_id, message.sent_from_id, message.text_message, message.id, mfrom.lastname AS lastname, mfrom.firstname AS firstname, mfrom.company AS company, mfrom.country AS country,
+			mto.lastname AS to_lastname, mto.firstname AS to_firstname,
+			message.created_at, message.status
 			FROM message
-			LEFT JOIN user_profile ON  message.sent_from_id = user_profile.user_id
+			LEFT JOIN user_profile mfrom ON  message.sent_from_id = mfrom.user_id
+			LEFT JOIN user_profile mto ON  message.sent_to_id = mto.user_id
+
 			LEFT JOIN user ON message.sent_from_id = user.id
 			WHERE message.sent_to_id = ".$user_id.";"
 	    );
@@ -29,12 +32,16 @@ class MessageRepository extends \Doctrine\ORM\EntityRepository
 	public function sentMessages($user_id){
 		$em = $this->getEntityManager();
 		$connection = $em->getConnection();
-		$statement = $connection->prepare("SELECT user.username, message.id, message.sent_to_id, message.sent_from_id, message.text_message, message.id, user_profile.lastname, 
-						user_profile.firstname, user_profile.company, user_profile.country, message.created_at, message.status
-						FROM message
-						LEFT JOIN user_profile ON  message.sent_from_id = user_profile.user_id
-						LEFT JOIN user ON message.sent_from_id = user.id
-						WHERE message.sent_from_id = ".$user_id.";"
+		$statement = $connection->prepare("SELECT user.username, message.id, message.sent_to_id, message.sent_from_id, message.text_message, message.id, 
+mfrom.lastname AS lastname, mfrom.firstname AS firstname, mfrom.company AS company, mfrom.country AS country,
+mto.lastname AS to_lastname, mto.firstname AS to_firstname,
+message.created_at, message.status
+FROM message
+LEFT JOIN user_profile mfrom ON  message.sent_from_id = mfrom.user_id
+LEFT JOIN user_profile mto ON  message.sent_to_id = mto.user_id
+
+LEFT JOIN user ON message.sent_from_id = user.id
+WHERE message.sent_from_id = ".$user_id.";"
 	    );
 		$statement->execute();
 		$results = $statement->fetchAll();

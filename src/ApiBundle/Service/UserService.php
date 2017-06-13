@@ -286,17 +286,13 @@ class UserService{
         return ["status" => "Successfully deleted", "option" => "message"];
     }
 
-    public function setStatus($message_id, $from_to, $token){
+    public function setStatus($message_id, $token){
 
         $user = $this->getUserByToken($token);
         $message = $this->em->getRepository('EntityBundle:Message')->findOneBy(['id'=>$message_id]);
         
-        if($from_to = "from"){
-            $user = $this->em->getRepository('EntityBundle:User')->findOneBy(['id'=>$message->getSentFromId()]);
-        }else if($from_to = "to") {
-            $user = $this->em->getRepository('EntityBundle:User')->findOneBy(['id'=>$message->getSentToId()]);
-        }
         if($message){
+
               if($user->getId() == $message->getSentToId()){
                   $message->setStatus(1);
                   $this->em->persist($message);
